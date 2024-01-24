@@ -857,6 +857,10 @@ impl From<Vec<u8>> for Bytes {
             0 == (shared as usize & KIND_MASK),
             "internal: Box<Shared> should have an aligned pointer",
         );
+        println!("original");
+        println!("{:p}", &SHARED_VTABLE.drop);
+        println!("{:p}", &shared);
+        println!("{:p}", &ptr);
         Bytes {
             ptr,
             len,

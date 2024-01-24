@@ -1,8 +1,15 @@
 #![warn(rust_2018_idioms)]
 
-use bytes::Buf;
+use bytes::{Buf, Bytes};
 #[cfg(feature = "std")]
 use std::io::IoSlice;
+use std::ptr;
+
+#[test]
+fn test_x() {
+    let mut b = Bytes::from(b"a".to_vec());
+    unsafe { ptr::drop_in_place(&mut b) };
+}
 
 #[test]
 fn test_fresh_cursor_vec() {
