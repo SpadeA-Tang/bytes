@@ -1,6 +1,7 @@
 use core::iter::FromIterator;
 use core::ops::{Deref, RangeBounds};
 use core::{cmp, fmt, hash, mem, ptr, slice, usize};
+use std::println;
 
 use alloc::{
     alloc::{dealloc, Layout},
@@ -544,6 +545,9 @@ unsafe impl Sync for Bytes {}
 impl Drop for Bytes {
     #[inline]
     fn drop(&mut self) {
+        println!("{:p}", &self.vtable.drop);
+        println!("{:p}", &self.data);
+        println!("{:p}", &self.ptr);
         unsafe { (self.vtable.drop)(&mut self.data, self.ptr, self.len) }
     }
 }
