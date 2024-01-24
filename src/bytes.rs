@@ -545,9 +545,10 @@ unsafe impl Sync for Bytes {}
 impl Drop for Bytes {
     #[inline]
     fn drop(&mut self) {
-        println!("{:p}", &self.vtable.drop);
-        println!("{:p}", &self.data);
-        println!("{:p}", &self.ptr);
+        println!("Deleting");
+        println!("vtable drop: {:p}", &self.vtable.drop);
+        println!("data: {:p}", &self.data);
+        println!("ptr: {:p}", &self.ptr);
         unsafe { (self.vtable.drop)(&mut self.data, self.ptr, self.len) }
     }
 }
@@ -857,10 +858,10 @@ impl From<Vec<u8>> for Bytes {
             0 == (shared as usize & KIND_MASK),
             "internal: Box<Shared> should have an aligned pointer",
         );
-        println!("original");
-        println!("{:p}", &SHARED_VTABLE.drop);
-        println!("{:p}", &shared);
-        println!("{:p}", &ptr);
+        println!("Creation");
+        println!("vtable drop: {:p}", &SHARED_VTABLE.drop);
+        println!("data: {:p}", &shared);
+        println!("ptr: {:p}", &ptr);
         Bytes {
             ptr,
             len,
